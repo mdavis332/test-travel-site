@@ -4,6 +4,11 @@ rename = require('gulp-rename'),
 del = require('del');
 
 var config = {
+    shape: {
+        spacing: {
+            padding: 1
+        }
+    },
     mode: {
         css: {
             sprite: 'sprite.svg',
@@ -27,7 +32,7 @@ gulp.task('createSprite', ['beginClean'], function() {
 });
 
 gulp.task('copySpriteGraphic', ['createSprite'], function() {
-    return gulp.src('./app/temp/sprite/css/**/*.svg')
+    return gulp.src('./app/temp/sprite/css/**/*.{svg,png}')
     .pipe(gulp.dest('./app/assets/images/sprites'));
 });
 
@@ -38,7 +43,7 @@ gulp.task('copySpriteCSS', ['createSprite'], function() {
 });
 
 gulp.task('endClean', ['copySpriteGraphic', 'copySpriteCSS'], function() {
-    return del ('./app/temp/sprite');
+    return del('./app/temp/sprite');
 });
 
 gulp.task('icons', ['beginClean', 'createSprite', 'copySpriteGraphic', 'copySpriteCSS', 'endClean']);
